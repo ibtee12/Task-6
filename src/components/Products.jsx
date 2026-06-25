@@ -1,12 +1,15 @@
-import { useState } from 'react'
 import productsData from '../data/products.json'
 import ProductCard from './ProductCard'
 import Cart from './Cart'
 
-function Products({ cartItems, onBuy, onRemove, onCheckout }) {
-  // 'products' is the default view; 'cart' shows the cart section.
-  const [activeTab, setActiveTab] = useState('products')
-
+function Products({
+  cartItems,
+  activeTab,
+  onTabChange,
+  onBuy,
+  onRemove,
+  onCheckout,
+}) {
   return (
     <section id="products" className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
       {/* Heading */}
@@ -25,7 +28,7 @@ function Products({ cartItems, onBuy, onRemove, onCheckout }) {
         <div className="inline-flex rounded-full border border-slate-200 bg-white p-1">
           <button
             type="button"
-            onClick={() => setActiveTab('products')}
+            onClick={() => onTabChange('products')}
             className={`rounded-full px-6 py-2 text-sm font-semibold transition-colors ${
               activeTab === 'products'
                 ? 'bg-violet-600 text-white'
@@ -36,7 +39,7 @@ function Products({ cartItems, onBuy, onRemove, onCheckout }) {
           </button>
           <button
             type="button"
-            onClick={() => setActiveTab('cart')}
+            onClick={() => onTabChange('cart')}
             className={`rounded-full px-6 py-2 text-sm font-semibold transition-colors ${
               activeTab === 'cart'
                 ? 'bg-violet-600 text-white'

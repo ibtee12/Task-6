@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 const navLinks = ['Products', 'Features', 'Pricing', 'Testimonials', 'FAQ', 'Login']
 
-function Navbar({ cartCount = 0 }) {
+function Navbar({ cartCount = 0, onCartClick }) {
   const [menuOpen, setMenuOpen] = useState(false)
 
   return (
@@ -33,6 +33,7 @@ function Navbar({ cartCount = 0 }) {
           <button
             type="button"
             aria-label="Cart"
+            onClick={onCartClick}
             className="relative text-slate-600 transition-colors hover:text-violet-600"
           >
             <svg
