@@ -3,6 +3,10 @@ import Navbar from './components/Navbar'
 import Banner from './components/Banner'
 import Stats from './components/Stats'
 import Products from './components/Products'
+import Steps from './components/Steps'
+import Pricing from './components/Pricing'
+import CallToAction from './components/CallToAction'
+import Footer from './components/Footer'
 
 function App() {
   const [cartItems, setCartItems] = useState([])
@@ -37,8 +41,11 @@ function App() {
           onRemove={handleRemove}
           onCheckout={handleCheckout}
         />
-        {/* Upcoming steps: Steps, Pricing, CTA, Footer */}
+        <Steps />
+        <Pricing />
+        <CallToAction />
       </main>
+      <Footer />
     </div>
   )
 }

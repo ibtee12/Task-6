@@ -57,7 +57,7 @@ function ProductCard({ product, onBuy }) {
             className="flex items-center gap-2 text-sm text-slate-600"
           >
             <svg
-              className="h-4 w-4 flex-shrink-0 text-violet-500"
+              className="h-4 w-4 shrink-0 text-violet-500"
               fill="none"
               viewBox="0 0 24 24"
               strokeWidth={2.5}
