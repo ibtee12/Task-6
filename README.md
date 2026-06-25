@@ -4,8 +4,6 @@ A responsive single-page marketplace for premium digital tools, built with React
 Browse products, add them to a cart, and check out — with toast notifications
 throughout.
 
-> The full feature specification lives in [REQUIREMENTS.md](./REQUIREMENTS.md).
-> Reference designs are in [`The screens/`](./The%20screens/) (`Home.pdf`, `Cart.pdf`).
 
 ## Tech Stack
 
