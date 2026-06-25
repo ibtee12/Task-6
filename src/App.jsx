@@ -1,17 +1,43 @@
+import { useState } from 'react'
 import Navbar from './components/Navbar'
 import Banner from './components/Banner'
 import Stats from './components/Stats'
 import Products from './components/Products'
 
 function App() {
+  const [cartItems, setCartItems] = useState([])
+
+  // Each click adds a cart line; cartItemId keeps duplicate lines unique.
+  const handleBuy = (product) => {
+    setCartItems((prev) => [
+      ...prev,
+      { ...product, cartItemId: `${product.id}-${Date.now()}` },
+    ])
+  }
+
+  const handleRemove = (cartItemId) => {
+    setCartItems((prev) =>
+      prev.filter((item) => item.cartItemId !== cartItemId),
+    )
+  }
+
+  const handleCheckout = () => {
+    setCartItems([])
+  }
+
   return (
     <div className="min-h-screen bg-white text-slate-900">
-      <Navbar cartCount={0} />
+      <Navbar cartCount={cartItems.length} />
       <main>
         <Banner />
         <Stats />
-        <Products />
-        {/* Upcoming steps: Cart functionality, Steps, Pricing, CTA, Footer */}
+        <Products
+          cartItems={cartItems}
+          onBuy={handleBuy}
+          onRemove={handleRemove}
+          onCheckout={handleCheckout}
+        />
+        {/* Upcoming steps: Steps, Pricing, CTA, Footer */}
       </main>
     </div>
   )

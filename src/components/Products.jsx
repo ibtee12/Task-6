@@ -1,7 +1,12 @@
+import { useState } from 'react'
 import productsData from '../data/products.json'
 import ProductCard from './ProductCard'
+import Cart from './Cart'
 
-function Products({ onBuy }) {
+function Products({ cartItems, onBuy, onRemove, onCheckout }) {
+  // 'products' is the default view; 'cart' shows the cart section.
+  const [activeTab, setActiveTab] = useState('products')
+
   return (
     <section id="products" className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
       {/* Heading */}
@@ -15,30 +20,48 @@ function Products({ onBuy }) {
         </p>
       </div>
 
-      {/* Products / Cart toggle (interactivity added in Step 4) */}
+      {/* Products / Cart toggle */}
       <div className="mt-8 flex justify-center">
         <div className="inline-flex rounded-full border border-slate-200 bg-white p-1">
           <button
             type="button"
-            className="rounded-full bg-violet-600 px-6 py-2 text-sm font-semibold text-white"
+            onClick={() => setActiveTab('products')}
+            className={`rounded-full px-6 py-2 text-sm font-semibold transition-colors ${
+              activeTab === 'products'
+                ? 'bg-violet-600 text-white'
+                : 'text-slate-600 hover:text-violet-600'
+            }`}
           >
             Products
           </button>
           <button
             type="button"
-            className="rounded-full px-6 py-2 text-sm font-semibold text-slate-600"
+            onClick={() => setActiveTab('cart')}
+            className={`rounded-full px-6 py-2 text-sm font-semibold transition-colors ${
+              activeTab === 'cart'
+                ? 'bg-violet-600 text-white'
+                : 'text-slate-600 hover:text-violet-600'
+            }`}
           >
-            Cart (0)
+            Cart ({cartItems.length})
           </button>
         </div>
       </div>
 
-      {/* 3-column product grid */}
-      <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {productsData.map((product) => (
-          <ProductCard key={product.id} product={product} onBuy={onBuy} />
-        ))}
-      </div>
+      {/* Active view */}
+      {activeTab === 'products' ? (
+        <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {productsData.map((product) => (
+            <ProductCard key={product.id} product={product} onBuy={onBuy} />
+          ))}
+        </div>
+      ) : (
+        <Cart
+          items={cartItems}
+          onRemove={onRemove}
+          onCheckout={onCheckout}
+        />
+      )}
     </section>
   )
 }
