@@ -1,6 +1,7 @@
 import Navbar from './components/Navbar'
 import Banner from './components/Banner'
 import Stats from './components/Stats'
+import Products from './components/Products'
 
 function App() {
   return (
@@ -9,7 +10,8 @@ function App() {
       <main>
         <Banner />
         <Stats />
-        {/* Upcoming steps: Products/Cart, Steps, Pricing, CTA, Footer */}
+        <Products />
+        {/* Upcoming steps: Cart functionality, Steps, Pricing, CTA, Footer */}
       </main>
     </div>
   )
