@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import Navbar from './components/Navbar'
 import Banner from './components/Banner'
 import Stats from './components/Stats'
@@ -17,16 +19,26 @@ function App() {
       ...prev,
       { ...product, cartItemId: `${product.id}-${Date.now()}` },
     ])
+    toast.success(`${product.name} added to cart`)
   }
 
   const handleRemove = (cartItemId) => {
-    setCartItems((prev) =>
-      prev.filter((item) => item.cartItemId !== cartItemId),
-    )
+    setCartItems((prev) => {
+      const removed = prev.find((item) => item.cartItemId === cartItemId)
+      if (removed) {
+        toast.info(`${removed.name} removed from cart`)
+      }
+      return prev.filter((item) => item.cartItemId !== cartItemId)
+    })
   }
 
   const handleCheckout = () => {
+    if (cartItems.length === 0) {
+      toast.warn('Your cart is empty')
+      return
+    }
     setCartItems([])
+    toast.success('Checkout complete! Thank you for your purchase.')
   }
 
   return (
@@ -46,6 +58,14 @@ function App() {
         <CallToAction />
       </main>
       <Footer />
+
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop
+        theme="light"
+      />
     </div>
   )
 }

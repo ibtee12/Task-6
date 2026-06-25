@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import productIcons from '../data/icons'
 
 // Tailwind classes for each tag type (matches the design colours).
@@ -16,6 +17,15 @@ const periodLabels = {
 function ProductCard({ product, onBuy }) {
   const { name, description, price, period, tag, tagType, features, icon } =
     product
+
+  // Brief "Added to cart" feedback on the Buy Now button after a click.
+  const [added, setAdded] = useState(false)
+
+  const handleBuy = () => {
+    onBuy?.(product)
+    setAdded(true)
+    setTimeout(() => setAdded(false), 1500)
+  }
 
   return (
     <div className="flex flex-col rounded-2xl border border-slate-100 bg-white p-6 shadow-sm transition-shadow hover:shadow-md">
@@ -77,10 +87,15 @@ function ProductCard({ product, onBuy }) {
       {/* Buy button */}
       <button
         type="button"
-        onClick={() => onBuy?.(product)}
-        className="mt-6 w-full rounded-full bg-violet-600 py-3 text-sm font-semibold text-white transition-colors hover:bg-violet-700"
+        onClick={handleBuy}
+        disabled={added}
+        className={`mt-6 w-full rounded-full py-3 text-sm font-semibold text-white transition-colors ${
+          added
+            ? 'bg-emerald-500'
+            : 'bg-violet-600 hover:bg-violet-700'
+        }`}
       >
-        Buy Now
+        {added ? 'Added to cart' : 'Buy Now'}
       </button>
     </div>
   )

@@ -1,6 +1,10 @@
-const navLinks = ['Products', 'Features', 'Pricing', 'Testimonials', 'FAQ']
+import { useState } from 'react'
+
+const navLinks = ['Products', 'Features', 'Pricing', 'Testimonials', 'FAQ', 'Login']
 
 function Navbar({ cartCount = 0 }) {
+  const [menuOpen, setMenuOpen] = useState(false)
+
   return (
     <header className="sticky top-0 z-50 border-b border-slate-100 bg-white/90 backdrop-blur">
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
@@ -9,7 +13,7 @@ function Navbar({ cartCount = 0 }) {
           DigiTools
         </a>
 
-        {/* Nav links */}
+        {/* Desktop nav links */}
         <ul className="hidden items-center gap-8 lg:flex">
           {navLinks.map((link) => (
             <li key={link}>
@@ -21,14 +25,6 @@ function Navbar({ cartCount = 0 }) {
               </a>
             </li>
           ))}
-          <li>
-            <a
-              href="#login"
-              className="text-sm font-medium text-slate-600 transition-colors hover:text-violet-600"
-            >
-              Login
-            </a>
-          </li>
         </ul>
 
         {/* Right actions */}
@@ -60,15 +56,67 @@ function Navbar({ cartCount = 0 }) {
             )}
           </button>
 
-          {/* Get Started button */}
+          {/* Get Started button (desktop) */}
           <a
             href="#get-started"
-            className="rounded-full bg-violet-600 px-5 py-2 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-violet-700"
+            className="hidden rounded-full bg-violet-600 px-5 py-2 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-violet-700 sm:inline-block"
           >
             Get Started
           </a>
+
+          {/* Hamburger (mobile) */}
+          <button
+            type="button"
+            aria-label="Toggle menu"
+            onClick={() => setMenuOpen((open) => !open)}
+            className="text-slate-700 lg:hidden"
+          >
+            <svg
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.8}
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d={
+                  menuOpen
+                    ? 'M6 18 18 6M6 6l12 12'
+                    : 'M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5'
+                }
+              />
+            </svg>
+          </button>
         </div>
       </nav>
+
+      {/* Mobile menu */}
+      {menuOpen && (
+        <ul className="space-y-1 border-t border-slate-100 px-4 py-4 lg:hidden">
+          {navLinks.map((link) => (
+            <li key={link}>
+              <a
+                href={`#${link.toLowerCase()}`}
+                onClick={() => setMenuOpen(false)}
+                className="block rounded-lg px-3 py-2 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-50 hover:text-violet-600"
+              >
+                {link}
+              </a>
+            </li>
+          ))}
+          <li>
+            <a
+              href="#get-started"
+              onClick={() => setMenuOpen(false)}
+              className="mt-2 block rounded-full bg-violet-600 px-5 py-2 text-center text-sm font-semibold text-white sm:hidden"
+            >
+              Get Started
+            </a>
+          </li>
+        </ul>
+      )}
     </header>
   )
 }
